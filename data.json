@@ -1,0 +1,37 @@
+{
+    "name": "KFC",
+    "categories": [
+        {
+            "id": "sandwiches",
+            "name": "Sandwiches",
+            "items": [
+                {
+                    "id": "twister",
+                    "name": "Twister Wrap",
+                    "category": "sandwiches",
+                    "price": 9,
+                    "image": "twister.txt"
+                }
+            ]
+        },
+        {
+            "id": "burgers",
+            "name": "Burgers",
+            "items": [
+                {
+                    "id": "burger_chicken",
+                    "name": "Chicken Burger",
+                    "category": "burgers",
+                    "price": "12",
+                    "image": "burger_chicken.txt"
+                }
+            ]
+        },
+        {
+            "id": "sides",
+            "name": "Sides",
+            "items": [
+            ]
+        }
+    ]
+}
