@@ -1,7 +1,6 @@
 from tkinter import *
 import customtkinter
 from PIL import Image, ImageTk
-from pyautogui import size
 
 customtkinter.set_appearance_mode("Dark")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
@@ -12,7 +11,7 @@ money = [0]
 
 # Getting the screen size so the code would work with different devices.
 def get_screen_size():
-    width, height = size()
+    width, height = app.winfo_screenwidth(), app.winfo_screenheight()
     print(f'{width}x{height}')
     return f'{width}x{height}'
 
