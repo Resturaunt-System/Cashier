@@ -15,13 +15,6 @@ def get_screen_size():
     print(f'{width}x{height}')
     return f'{width}x{height}'
 
-
-app = customtkinter.CTk()  # create CTk window like you do with the Tk window
-app.geometry(get_screen_size())
-
-
-# Bro is literally a bozo
-
 # Making the function of the button
 def add_item(name, price):
     x = ""
@@ -31,18 +24,6 @@ def add_item(name, price):
         x += f'{item}      {cart.count(item)}'
         x += "\n"
     orders.configure(text=x + str(money[0]))
-    #print(int(money[0]))
-
-# Making the function of the button
-# def burger_function():
-#     x = ""
-#     money[0] = (int(str(money[0])) + 10)
-#     cart.append("Burger")
-#     for item in set(cart):
-#         x += f'{item}      {cart.count(item)}'
-#         x += "\n"
-#     #print(x)
-#     orders.configure(text=x + str(money[0]))
     #print(int(money[0]))
 
 # Making the images all of the same size to add them to the button
@@ -69,6 +50,8 @@ def exit_function():
     no.place(x=180, y=90)
     w.mainloop()
 
+app = customtkinter.CTk()  # create CTk window like you do with the Tk window
+app.geometry(get_screen_size())
 
 #Defining the image
 twister_img = ImageTk.PhotoImage(resizing_function("twister.jpg"))
