@@ -24,7 +24,7 @@ def resize_image(path, size):
     return img
 
 # Making the exit button the menu the pops up when pressing on it
-def exit_function():
+def exit():
     w=ctk.CTk()
     w.geometry("375x200")
     def yes():
@@ -50,13 +50,20 @@ app.minsize(1024, 768)
 app.columnconfigure(0, weight=75)
 app.columnconfigure((1, 2), weight=12)
 
-app.rowconfigure(1, weight=100)
+app.rowconfigure(1, weight=1)
 
 title = ctk.CTkLabel(app, text=RESTURAUNT_DATA["name"], font=("Arial", 64))
 title.grid(row=0, column=0, sticky="nsew", columnspan=3, padx=10, pady=10)
 
 # CATEGORIES/ITEMS SECTION
-items = ctk.CTkFrame(app)
+items = ctk.CTkScrollableFrame(app)
+items.columnconfigure((0,1), weight=1)
+# If you don't understand the below part. Don't worry, I don't either.
+for i, category in enumerate(RESTURAUNT_DATA['categories']):
+    category_name = category['name']
+    category_button = ctk.CTkButton(items, text=category_name, command=lambda name=category_name: category_clicked(name), width=200, height=200, font=("Arial", 32))
+    category_button.grid(row=i // 2, column=i % 2, sticky="news", padx=5, pady=5)
+    category_button.configure(width=200, height=200)
 items.grid(row=1, column=0, sticky="nsew")
 
 selected = ctk.CTkFrame(app)
