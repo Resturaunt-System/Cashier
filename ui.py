@@ -2,8 +2,8 @@ import customtkinter as ctk
 from PIL import Image
 from json import load as json_load
 
-ctk.set_appearance_mode("Dark")  # Modes: system (default), light, dark
-ctk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
+ctk.set_appearance_mode("system")  # Modes: system (default), light, dark
+ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
 # Initializing lists
 cart = []
@@ -27,15 +27,10 @@ def resize_image(path, size):
 def exit():
     w=ctk.CTk()
     w.geometry("375x200")
-    def yes():
-        w.destroy()
-        app.destroy()
-    def no():
-        w.destroy()
     label = ctk.CTkLabel(w, text="Do you really want to EXIT the app?", fg_color="transparent", font=("Serif fonts", 20))
     label.place(x=30, y=30)
-    yes = ctk.CTkButton(w, text="Yes", fg_color="Red", command=yes)
-    no = ctk.CTkButton(w, text="No", fg_color="Blue", command=no)
+    yes = ctk.CTkButton(w, text="Yes", fg_color="Red", command=lambda: (w.destroy(), app.destroy())) # It is in tuples so it would run both commands
+    no = ctk.CTkButton(w, text="No", fg_color="Blue", command=w.destroy)
     yes.place(x=30, y=90)
     no.place(x=180, y=90)
     w.mainloop()
@@ -56,7 +51,12 @@ title = ctk.CTkLabel(app, text=RESTURAUNT_DATA["name"], font=("Arial", 64))
 title.grid(row=0, column=0, sticky="nsew", columnspan=3, padx=10, pady=10)
 
 # CATEGORIES/ITEMS SECTION
-items = ctk.CTkScrollableFrame(app)
+items_outer = ctk.CTkFrame(app)
+items_outer.rowconfigure(0, weight=100)
+items_outer.rowconfigure(1, weight=1)
+items_outer.columnconfigure(0, weight=1)
+
+items = ctk.CTkScrollableFrame(items_outer)
 items.columnconfigure((0,1), weight=1)
 # If you don't understand the below part. Don't worry, I don't either.
 for i, category in enumerate(RESTURAUNT_DATA['categories']):
@@ -64,7 +64,13 @@ for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32))
     category_button.grid(row=i // 2, column=i % 2, sticky="news", padx=5, pady=5)
     category_button.configure(width=200, height=200)
-items.grid(row=1, column=0, sticky="nsew")
+
+items.grid(row=0, column=0, sticky="nsew")
+
+back = ctk.CTkButton(items_outer, text="Back", font=("Arial", 32), state="disabled")
+back.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+
+items_outer.grid(row=1, column=0, sticky="nsew")
 
 selected = ctk.CTkFrame(app)
 selected.grid(row=1, column=1, sticky="nsew")
