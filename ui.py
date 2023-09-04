@@ -14,7 +14,7 @@ RESTURAUNT_DATA = json_load(open("data.json", "r"))
 # Getting the screen size so the code would work with different devices.
 def get_screen_size():
     width, height = app.winfo_screenwidth(), app.winfo_screenheight()
-    print(f'{width}x{height}')
+    # print(f'{width}x{height}')
     return f'{width}x{height}'
 
 # Making the images all of the same size to add them to the button
@@ -64,6 +64,12 @@ for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_button.grid(row=i // 2, column=i % 2, sticky="news", padx=5, pady=5)
     category_button.configure(width=200, height=200)
 
+# This funciton will be called when any of the categories buttons is pressed
+def choosing_a_category():
+    # The i will be used later to add the buttons
+    for i, category in enumerate(RESTURAUNT_DATA["categories"]):
+        name = (category['items'][0]['name'])
+        
 items.grid(row=0, column=0, sticky="nsew")
 
 back = ctk.CTkButton(items_outer, text="Back", font=("Arial", 32), state="disabled")
@@ -76,6 +82,7 @@ selected.grid(row=1, column=1, sticky="nsew")
 
 order = ctk.CTkFrame(app)
 order.grid(row=1, column=2, sticky="nsew")
+choosing_a_category()
 
 app.mainloop()
 

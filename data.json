@@ -31,6 +31,11 @@
             "id": "sides",
             "name": "Sides",
             "items": [
+				{
+					"id": "ranch_sauce",
+					"name": "Ranch Sauce",
+					"category": "sides"
+				}
             ]
         }
     ]
