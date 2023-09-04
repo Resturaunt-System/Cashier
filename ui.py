@@ -58,7 +58,6 @@ items_outer.columnconfigure(0, weight=1)
 
 items = ctk.CTkScrollableFrame(items_outer)
 items.columnconfigure((0,1), weight=1)
-# If you don't understand the below part. Don't worry, I don't either.
 for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_name = category['name']
     category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32))
