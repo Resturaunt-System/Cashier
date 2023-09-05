@@ -24,7 +24,15 @@
                     "category": "burgers",
                     "price": "12",
                     "image": "burger_chicken.txt"
-                }
+                },
+				{
+                    "id": "burger_beef",
+                    "name": "Beef Burger",
+                    "category": "burgers",
+                    "price": "12",
+                    "image": "burger_chicken.txt"
+
+				}
             ]
         },
         {

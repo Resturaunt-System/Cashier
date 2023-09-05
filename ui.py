@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
 from json import load as json_load
+from collections import defaultdict
 
 ctk.set_appearance_mode("system")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
@@ -65,11 +66,16 @@ for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_button.configure(width=200, height=200)
 
 # This funciton will be called when any of the categories buttons is pressed
-def choosing_a_category():
+def choosing_a_category(id: str):
     # The i will be used later to add the buttons
+    category_with_element = defaultdict(list)
     for i, category in enumerate(RESTURAUNT_DATA["categories"]):
-        name = (category['items'][0]['name'])
-        
+        for i in range(len(category['items'])):
+            item_name = category['items'][i]['name']
+            category_name = category['items'][i]['category']
+            category_with_element[(category_name)].append(item_name)
+    return category_with_element.get(id)
+     
 items.grid(row=0, column=0, sticky="nsew")
 
 back = ctk.CTkButton(items_outer, text="Back", font=("Arial", 32), state="disabled")
@@ -82,7 +88,7 @@ selected.grid(row=1, column=1, sticky="nsew")
 
 order = ctk.CTkFrame(app)
 order.grid(row=1, column=2, sticky="nsew")
-choosing_a_category()
+print(choosing_a_category("burgers"))
 
 app.mainloop()
 
