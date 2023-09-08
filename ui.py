@@ -2,7 +2,7 @@ import customtkinter as ctk
 from PIL import Image
 from json import load as json_load
 from collections import defaultdict
-
+from time import sleep
 ctk.set_appearance_mode("system")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
@@ -55,28 +55,49 @@ title.grid(row=0, column=0, sticky="nsew", columnspan=3, padx=10, pady=10)
 items_outer = ctk.CTkFrame(app)
 items_outer.rowconfigure(0, weight=100)
 items_outer.rowconfigure(1, weight=1)
+# items_outer.rowconfigure(2, weight=100)
 items_outer.columnconfigure(0, weight=1)
 
 items = ctk.CTkScrollableFrame(items_outer)
 items.columnconfigure((0,1), weight=1)
+
+category_items = ctk.CTkScrollableFrame(items_outer)
+category_items.columnconfigure((0,2), weight=1)
+# category_items.grid()
+category_items.grid_forget()
+
+def replacing_frames(removed_frame, added_frame):
+    removed_frame.grid_forget()
+    added_frame.grid(row=0, column=0, sticky="nsew")
+    return added_frame
+
 for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_name = category['name']
-    category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32))
+    # What we'll probably do is to loop over all the categories' ids and enter them to the lambda command stuff
+    category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32), command=lambda: choosing_a_category('burgers'))
     category_button.grid(row=i // 2, column=i % 2, sticky="news", padx=5, pady=5)
     category_button.configure(width=200, height=200)
 
 # This funciton will be called when any of the categories buttons is pressed
 def choosing_a_category(id: str):
-    # The i will be used later to add the buttons
+    wanted_frame = replacing_frames(items, category_items)
     category_with_element = defaultdict(list)
-    for i, category in enumerate(RESTURAUNT_DATA["categories"]):
+    for category in (RESTURAUNT_DATA["categories"]):
         for i in range(len(category['items'])):
             item_name = category['items'][i]['name']
             category_name = category['items'][i]['category']
             category_with_element[(category_name)].append(item_name)
-    return category_with_element.get(id)
+    for i, element in enumerate(category_with_element.get(id)):
+        print(i//2, i%2)
+        element_button = ctk.CTkButton(wanted_frame, text=element, width=200, height=200, font=("Arial", 32))
+        element_button.grid(row=i // 2, column = i % 2, sticky="news", padx=5, pady=5) 
+        element_button.configure(width=200, height=200)
+    #return category_with_element.get(id)
      
 items.grid(row=0, column=0, sticky="nsew")
+
+
+# replacing_frames(items, "bruh").grid(row=0, column=0, sticky="nsew")
 
 back = ctk.CTkButton(items_outer, text="Back", font=("Arial", 32), state="disabled")
 back.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
@@ -88,7 +109,7 @@ selected.grid(row=1, column=1, sticky="nsew")
 
 order = ctk.CTkFrame(app)
 order.grid(row=1, column=2, sticky="nsew")
-print(choosing_a_category("burgers"))
+# print(choosing_a_category("burgers"))
 
 app.mainloop()
 
