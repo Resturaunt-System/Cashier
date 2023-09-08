@@ -8,14 +8,12 @@
                 {
                     "id": "twister",
                     "name": "Twister Wrap",
-                    "category": "sandwiches",
                     "price": 9,
                     "image": "twister.txt"
                 },
                 {
                     "id": "mexicano",
                     "name": "Mexicano Sandwich",
-                    "category": "sandwiches",
                     "price": "8",
                     "image": ""
                 }
@@ -28,14 +26,12 @@
                 {
                     "id": "burger_chicken",
                     "name": "Chicken Burger",
-                    "category": "burgers",
                     "price": "12",
                     "image": "burger_chicken.txt"
                 },
 				{
                     "id": "burger_beef",
                     "name": "Beef Burger",
-                    "category": "burgers",
                     "price": "12",
                     "image": "burger_chicken.txt"
 
@@ -48,8 +44,7 @@
             "items": [
 				{
 					"id": "ranch_sauce",
-					"name": "Ranch Sauce",
-					"category": "sides"
+					"name": "Ranch Sauce"
 				}
             ]
         }
