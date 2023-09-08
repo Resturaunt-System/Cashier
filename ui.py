@@ -66,30 +66,22 @@ category_items.columnconfigure((0,2), weight=1)
 # category_items.grid()
 category_items.grid_forget()
 
-def replacing_frames(removed_frame, added_frame):
-    removed_frame.grid_forget()
-    added_frame.grid(row=0, column=0, sticky="nsew")
-    return added_frame
-
-def making_buttons(text: str, frame, width, height, font, size, id):
-    button = ctk.CTkButton(frame, text = text, width=width, height=height, font=(font, size), command=lambda: choosing_a_category(id))
-    return button 
-
+def replace_frame(current_frame, new_frame, row=0, column=0, **kwargs):
+    current_frame.grid_forget()
+    new_frame.grid(row=row, column=column, sticky="nsew", **kwargs)
+    return new_frame
 
 for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_name = category['name']
-    # print(f'{type(category_name)} : {category_name}')
     category_id = category['id']
-    # What we'll probably do is to loop over all the categories' ids and enter them to the lambda command stuff
-    # category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32), command=lambda: choosing_a_category(category_id))
-    category_button = making_buttons(frame=items, text=category_name, width=200, height=200, font="Arial", size=32, id = category_id)
+    category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32), command=lambda category_id=category_id: open_category(category_id))
     category_button.grid(row=i // 2, column=i % 2, sticky="news", padx=5, pady=5)
     category_button.configure(width=200, height=200)
 
 # This funciton will be called when any of the categories buttons is pressed
-def choosing_a_category(id: str):
+def open_category(id: str):
     print(id)
-    wanted_frame = replacing_frames(items, category_items)
+    replace_frame(items, category_items)
     category_with_element = defaultdict(list)
     for category in (RESTURAUNT_DATA["categories"]):
         for i in range(len(category['items'])):
@@ -97,8 +89,7 @@ def choosing_a_category(id: str):
             category_name = category['items'][i]['category']
             category_with_element[(category_name)].append(item_name)
     for i, element in enumerate(category_with_element.get(id)):
-        print(i//2, i%2)
-        element_button = ctk.CTkButton(wanted_frame, text=element, width=200, height=200, font=("Arial", 32))
+        element_button = ctk.CTkButton(category_items, text=element, width=200, height=200, font=("Arial", 32))
         element_button.grid(row=i // 2, column = i % 2, sticky="news", padx=5, pady=5) 
         element_button.configure(width=200, height=200)
     #return category_with_element.get(id)
