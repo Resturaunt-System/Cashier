@@ -11,6 +11,13 @@
                     "category": "sandwiches",
                     "price": 9,
                     "image": "twister.txt"
+                },
+                {
+                    "id": "mexicano",
+                    "name": "Mexicano Sandwich",
+                    "category": "sandwiches",
+                    "price": "8",
+                    "image": ""
                 }
             ]
         },
