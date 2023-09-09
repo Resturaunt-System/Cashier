@@ -71,8 +71,8 @@ def replacing_frames(removed_frame, added_frame):
     added_frame.grid(row=0, column=0, sticky="nsew")
     return added_frame
 
-def making_buttons(text: str, frame, width, height, font, size, id):
-    button = ctk.CTkButton(frame, text = text, width=width, height=height, font=(font, size), command=lambda: choosing_a_category(id))
+def make_sub_button(text: str, frame, width, height, font, size, id):
+    button = ctk.CTkButton(frame, text = text, width=width, height=height, font=(font, size), command=lambda: choose_category(id))
     return button 
 
 
@@ -82,12 +82,12 @@ for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_id = category['id']
     # What we'll probably do is to loop over all the categories' ids and enter them to the lambda command stuff
     # category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32), command=lambda: choosing_a_category(category_id))
-    category_button = making_buttons(frame=items, text=category_name, width=200, height=200, font="Arial", size=32, id = category_id)
+    category_button = make_sub_button(frame=items, text=category_name, width=200, height=200, font="Arial", size=32, id = category_id)
     category_button.grid(row=i // 2, column=i % 2, sticky="news", padx=5, pady=5)
     category_button.configure(width=200, height=200)
 
 # This funciton will be called when any of the categories buttons is pressed
-def choosing_a_category(id: str):
+def choose_category(id: str):
     print(id)
     wanted_frame = replacing_frames(items, category_items)
     category_with_element = defaultdict(list)
