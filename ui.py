@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
 from json import load as json_load
-from collections import defaultdict
 from time import sleep
 ctk.set_appearance_mode("system")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
@@ -25,7 +24,7 @@ def resize_image(path, size):
     return img
 
 # Making the exit button the menu the pops up when pressing on it
-def exit():
+def _exit():
     w=ctk.CTk()
     w.geometry("375x200")
     label = ctk.CTkLabel(w, text="Do you really want to EXIT the app?", fg_color="transparent", font=("Serif fonts", 20))
@@ -76,23 +75,17 @@ for i, category in enumerate(RESTURAUNT_DATA['categories']):
     category_id = category['id']
     category_button = ctk.CTkButton(items, text=category_name, width=200, height=200, font=("Arial", 32), command=lambda category_id=category_id: open_category(category_id))
     category_button.grid(row=i // 2, column=i % 2, sticky="news", padx=5, pady=5)
-    category_button.configure(width=200, height=200)
 
 # This funciton will be called when any of the categories buttons is pressed
-def open_category(id: str):
-    print(id)
+def open_category(_id: str):
+    print(_id)
     replace_frame(items, category_items)
-    category_with_element = defaultdict(list)
     for category in (RESTURAUNT_DATA["categories"]):
-        for i in range(len(category['items'])):
-            item_name = category['items'][i]['name']
-            category_name = category['items'][i]['category']
-            category_with_element[(category_name)].append(item_name)
-    for i, element in enumerate(category_with_element.get(id)):
-        element_button = ctk.CTkButton(category_items, text=element, width=200, height=200, font=("Arial", 32))
-        element_button.grid(row=i // 2, column = i % 2, sticky="news", padx=5, pady=5) 
-        element_button.configure(width=200, height=200)
-    #return category_with_element.get(id)
+        if category['id'] == _id:
+            for i in range(len(category['items'])):
+                item_name = category['items'][i]['name']
+                item = ctk.CTkButton(category_items, text=item_name, width=200, height=200, font=("Arial", 32), wraplength=200)
+                item.grid(row=i // 2, column = i % 2, sticky="news", padx=5, pady=5)
      
 items.grid(row=0, column=0, sticky="nsew")
 
