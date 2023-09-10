@@ -2,6 +2,14 @@ import customtkinter as ctk
 from PIL import Image
 from json import load as json_load
 from time import sleep
+import base64
+from PIL import Image, ImageTk
+import PIL
+import io
+import os 
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 ctk.set_appearance_mode("system")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
@@ -17,11 +25,25 @@ def get_screen_size():
     # print(f'{width}x{height}')
     return f'{width}x{height}'
 
-# Making the images all of the same size to add them to the button
-def resize_image(path, size):
-    img = Image.open(path)
-    img = img.resize(size)
+# Deocde the ranch sauce for the program to execute without errors.
+def decode_image(path):
+    with open(path , "rb") as image_file :
+        data = base64.b64encode(image_file.read())    
+    return data.decode('utf-8')
+
+decode_image("")
+
+def define_image(image_name, size):
+    with open(f"{dir_path}/src/{image_name}", "rb") as image_file:
+        decoded_string = base64.b64decode(image_file.read())
+    _bytes = io.BytesIO(decoded_string)
+    img = ctk.CTkImage(light_image=Image.open(_bytes), dark_image=Image.open(_bytes), size=size)
     return img
+
+# define_image("twister.txt", (20, 30))
+
+#im = Image.open(define_image("twister.txt"))
+#im.show()
 
 # Making the exit button the menu the pops up when pressing on it
 def _exit():
