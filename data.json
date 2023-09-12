@@ -15,7 +15,7 @@
                     "id": "mexicano",
                     "name": "Mexicano Sandwich",
                     "price": "8",
-                    "image": ""
+                    "image": "mexicano.txt"
                 }
             ]
         },
@@ -33,7 +33,7 @@
                     "id": "burger_beef",
                     "name": "Beef Burger",
                     "price": "12",
-                    "image": "burger_chicken.txt"
+                    "image": "burger_beef.txt"
 
 				}
             ]
@@ -44,7 +44,9 @@
             "items": [
 				{
 					"id": "ranch_sauce",
-					"name": "Ranch Sauce"
+					"name": "Ranch Sauce",
+                    "price": "0",
+                    "image": "ranch_sauce.txt"
 				}
             ]
         }
