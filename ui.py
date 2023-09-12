@@ -3,8 +3,6 @@ from PIL import Image
 from json import load as json_load
 from time import sleep
 import base64
-from PIL import Image, ImageTk
-import PIL
 import io
 import os 
 
@@ -29,21 +27,21 @@ def get_screen_size():
 def decode_image(path):
     with open(path , "rb") as image_file :
         data = base64.b64encode(image_file.read())    
-    return data.decode('utf-8')
+    with open(f"{path[:-4]}.txt", "wb") as new_file:
+        # data = io.BytesIO(data.getbuffer())
+        new_file.write(data)
+    # return data.decode('utf-8')
 
-decode_image("")
+# decode_image("assets/burger_beef.jpg")
 
 def define_image(image_name, size):
-    with open(f"{dir_path}/src/{image_name}", "rb") as image_file:
+    with open(f"{dir_path}/assets/{image_name}.txt", "rb") as image_file:
         decoded_string = base64.b64decode(image_file.read())
     _bytes = io.BytesIO(decoded_string)
     img = ctk.CTkImage(light_image=Image.open(_bytes), dark_image=Image.open(_bytes), size=size)
     return img
 
-# define_image("twister.txt", (20, 30))
 
-#im = Image.open(define_image("twister.txt"))
-#im.show()
 
 # Making the exit button the menu the pops up when pressing on it
 def _exit():
@@ -106,8 +104,11 @@ def open_category(_id: str):
         if category['id'] == _id:
             for i in range(len(category['items'])):
                 item_name = category['items'][i]['name']
-                item = ctk.CTkButton(category_items, text=item_name, width=200, height=200, font=("Arial", 32), wraplength=200)
+                item_id = category['items'][i]['id']
+                item = ctk.CTkButton(category_items, text=item_name, width=200, height=200, compound="top", image=define_image(item_id, (200, 200)))
                 item.grid(row=i // 2, column = i % 2, sticky="news", padx=5, pady=5)
+     
+
      
 items.grid(row=0, column=0, sticky="nsew")
 
