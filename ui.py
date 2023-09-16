@@ -34,6 +34,10 @@ def decode_image(path):
 
 # decode_image("assets/burger_beef.jpg")
 
+def add_item(item_id, price):
+    pass
+
+
 def define_image(image_name, size):
     with open(f"{dir_path}/assets/{image_name}.txt", "rb") as image_file:
         decoded_string = base64.b64decode(image_file.read())
@@ -85,7 +89,8 @@ category_items.columnconfigure((0,2), weight=1)
 # category_items.grid()
 category_items.grid_forget()
 
-def replace_frame(current_frame, new_frame, row=0, column=0, **kwargs):
+def replace_frame(current_frame, new_frame, **kwargs):
+    row, column = 0, 0
     current_frame.grid_forget()
     new_frame.grid(row=row, column=column, sticky="nsew", **kwargs)
     return new_frame
@@ -98,7 +103,7 @@ for i, category in enumerate(RESTURAUNT_DATA['categories']):
 
 # This funciton will be called when any of the categories buttons is pressed
 def open_category(_id: str):
-    print(_id)
+    # print(_id)
     replace_frame(items, category_items)
     for category in (RESTURAUNT_DATA["categories"]):
         if category['id'] == _id:
@@ -115,7 +120,7 @@ items.grid(row=0, column=0, sticky="nsew")
 
 # replacing_frames(items, "bruh").grid(row=0, column=0, sticky="nsew")
 
-back = ctk.CTkButton(items_outer, text="Back", font=("Arial", 32), state="disabled")
+back = ctk.CTkButton(items_outer, text="Back", font=("Arial", 32), command=lambda: replace_frame(category_items, items))
 back.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
 
 items_outer.grid(row=1, column=0, sticky="nsew")
