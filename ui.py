@@ -34,10 +34,6 @@ def decode_image(path):
 
 # decode_image("assets/burger_beef.jpg")
 
-def add_item(item_id, price):
-    pass
-
-
 def define_image(image_name, size):
     with open(f"{dir_path}/assets/{image_name}.txt", "rb") as image_file:
         decoded_string = base64.b64decode(image_file.read())
@@ -78,7 +74,6 @@ title.grid(row=0, column=0, sticky="nsew", columnspan=3, padx=10, pady=10)
 items_outer = ctk.CTkFrame(app)
 items_outer.rowconfigure(0, weight=100)
 items_outer.rowconfigure(1, weight=1)
-# items_outer.rowconfigure(2, weight=100)
 items_outer.columnconfigure(0, weight=1)
 
 items = ctk.CTkScrollableFrame(items_outer)
@@ -88,6 +83,20 @@ category_items = ctk.CTkScrollableFrame(items_outer)
 category_items.columnconfigure((0,2), weight=1)
 # category_items.grid()
 category_items.grid_forget()
+
+orders = ctk.CTkFrame(app)
+order = ctk.CTkScrollableFrame(orders)
+order_label = ctk.CTkLabel(order)
+
+def add_item(item_id, price):
+    x = ""
+    money[0] = (int(str(money[0])) + price)
+    cart.append(item_id)
+    for item in set(cart):
+        x += f'{item}      {cart.count(item)}'
+        x += "\n"
+    order_label.configure(text=x + str(money[0]))
+    print(x)
 
 def replace_frame(current_frame, new_frame, **kwargs):
     row, column = 0, 0
@@ -103,14 +112,15 @@ for i, category in enumerate(RESTURAUNT_DATA['categories']):
 
 # This funciton will be called when any of the categories buttons is pressed
 def open_category(_id: str):
-    # print(_id)
     replace_frame(items, category_items)
     for category in (RESTURAUNT_DATA["categories"]):
         if category['id'] == _id:
+            print(category['items'])
             for i in range(len(category['items'])):
                 item_name = category['items'][i]['name']
                 item_id = category['items'][i]['id']
-                item = ctk.CTkButton(category_items, text=item_name, width=200, height=200, compound="top", image=define_image(item_id, (200, 200)))
+                item_price = int(category['items'][i]['price'])
+                item = ctk.CTkButton(category_items, text=item_name, width=200, height=200, compound="top", image=define_image(item_id, (200, 200)), command=lambda: add_item(item_name, item_price))
                 item.grid(row=i // 2, column = i % 2, sticky="news", padx=5, pady=5)
      
 
@@ -118,19 +128,19 @@ def open_category(_id: str):
 items.grid(row=0, column=0, sticky="nsew")
 
 
-# replacing_frames(items, "bruh").grid(row=0, column=0, sticky="nsew")
-
 back = ctk.CTkButton(items_outer, text="Back", font=("Arial", 32), command=lambda: replace_frame(category_items, items))
 back.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
 
+
 items_outer.grid(row=1, column=0, sticky="nsew")
+
 
 selected = ctk.CTkFrame(app)
 selected.grid(row=1, column=1, sticky="nsew")
 
-order = ctk.CTkFrame(app)
-order.grid(row=1, column=2, sticky="nsew")
-# print(choosing_a_category("burgers"))
+
+orders.grid(row=1, column=2, sticky="nsew")
+
 
 app.mainloop()
 
